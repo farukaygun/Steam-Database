@@ -86,9 +86,9 @@ CREATE TABLE TAHSILAT
 
 	/* OPSIYONEL */
 	KULLANICI_ADI VARCHAR(30),
-	SON_KULLANMA_TARIHI DATE NOT NULL,
-	GUVENLIK_KODU INT NOT NULL,
-	KART_NO INT NOT NULL,
+	SON_KULLANMA_TARIHI DATE DEFAULT NULL,
+	GUVENLIK_KODU INT DEFAULT NULL,
+	KART_NO NUMERIC DEFAULT NULL,
 	/* OPSIYONEL */
 	ODEME_ID INT FOREIGN KEY REFERENCES ODEMETURU(ODEME_ID)
 );
@@ -107,16 +107,15 @@ CREATE TABLE BASARIMLAR
 	OYUN_ID INT FOREIGN KEY REFERENCES OYUN(OYUN_ID)
 );
 
-DROP TABLE #KAZANIR
-CREATE TABLE #KAZANIR
+CREATE TABLE KAZANIR
 (
 	KULLANICI_ID INT FOREIGN KEY REFERENCES KULLANICI(KULLANICI_ID),
 	BASARIM_ID INT FOREIGN KEY REFERENCES BASARIMLAR(BASARIM_ID),
+	TARIH DATE,
 	PRIMARY KEY(KULLANICI_ID, BASARIM_ID)
 );
 
-DROP TABLE #YORUMYAPAR
-CREATE TABLE #YORUMYAPAR
+CREATE TABLE YORUMYAPAR
 (
 	YORUM_ID INT NOT NULL,
 	METIN VARCHAR(100),
@@ -141,160 +140,9 @@ CREATE TABLE KATEGORILER
 	TUR VARCHAR(30)
 );
 
-DROP TABLE #ICERIR
-CREATE TABLE #ICERIR
+CREATE TABLE ICERIR
 (
 	OYUN_ID INT FOREIGN KEY REFERENCES OYUN(OYUN_ID),
 	KATEGORI_ID INT FOREIGN KEY REFERENCES KATEGORILER(KATEGORI_ID),
 	PRIMARY KEY(OYUN_ID, KATEGORI_ID)
 );
-
-INSERT INTO KULLANICI VALUES (1, 'FARUK', 'MAIL 1'),
-							 (2, 'UĞUR', 'MAIL 2'),
-							 (3, 'NURULLAH', 'MAIL 3'),
-							 (4, 'ÜMİT', 'MAIL 4'),
-							 (5, 'AHMET', 'MAIL 5'),
-							 (6, 'MEHMET', 'MAIL 6'),
-							 (7, 'ALİ', 'MAIL 7'),
-							 (8, 'AYŞE', 'MAIL 8'),
-							 (9, 'BUSE', 'MAIL 9'),
-							 (10, 'MERVE', 'MAIL 10');
-
-INSERT INTO YAYIMCI VALUES (1,'YAYIMCI MAIL 1','YAYIMCI 1','1999-01-03','YAYIMCI SITE 1'),
-						   (2,'YAYIMCI MAIL 2','YAYIMCI 2','1992-03-12','YAYIMCI SITE 2'),
-						   (3,'YAYIMCI MAIL 3','YAYIMCI 3','1990-01-03','YAYIMCI SITE 3'),
-						   (4,'YAYIMCI MAIL 4','YAYIMCI 4','2002-12-02','YAYIMCI SITE 4'),
-						   (5,'YAYIMCI MAIL 5','YAYIMCI 5','2005-01-05','YAYIMCI SITE 5');
-
-INSERT INTO YAPIMCI VALUES (1,'YAPIMCI MAIL 1','YAPIMCI 1','1989-03-11','YAPIMCI SITE 1'),
-						   (2,'YAPIMCI MAIL 2','YAPIMCI 2','1996-04-01','YAPIMCI SITE 2'),
-						   (3,'YAPIMCI MAIL 3','YAPIMCI 3','1984-07-06','YAPIMCI SITE 3'),
-						   (4,'YAPIMCI MAIL 4','YAPIMCI 4','1980-03-08','YAPIMCI SITE 4'),
-						   (5,'YAPIMCI MAIL 5','YAPIMCI 5','1987-02-02','YAPIMCI SITE 5');
-
-INSERT INTO BUNDLE VALUES (1,'BUNDLE 1', 129.99),
-						  (2,'BUNDLE 2', 99.99),
-						  (3,'BUNDLE 3', 149.99),
-						  (4,'BUNDLE 4', 140),
-						  (5,'BUNDLE 5', 13.99);
-
-INSERT INTO OYUN VALUES (1, 'FOOTBALL MANAGER 2018', 3, 1, 3),
-						(2, 'PES 2018', 2, 4, 1),
-						(3, 'WATCH DOGS', 1, 2, 2),
-						(4, 'THE CREW', NULL, 2, 2),
-						(5, 'FAR CRY 5', NULL, 2, 2),
-						(6, 'OVERWATCH', 4, 3, 1),
-						(7, 'DIABLO III', 5, 4, 1),
-						(8, 'DESTINY 2', NULL, 5, 1),
-						(9, 'CITIES: SKYLINES', NULL, 2, 4),
-						(10, 'PAPERS, PLEASE', NULL, 4, 5);
-
-INSERT INTO ANAHTAR VALUES (1, 119.99, 1, 1),
-						   (2, 49.99, 2, 9),
-						   (3, 99.99, 3, 8),
-						   (4, 149.99, 4, 2),
-						   (5, 69.99, 5, 3),
-						   (6, 105, 5, 4),
-						   (7, 209, 6, 5),
-						   (8, 100, 1, 6),
-						   (9, 100, 7, 7),
-						   (10, 120, 8,8),
-						   (11, 49.99, 9, 9),
-						   (12, 18, 10, 10),
-						   (13, 209, 2, 5);
-
-INSERT INTO KATEGORILER VALUES (1,'FUTBOL'),
-							   (2,'YARIŞ'),
-							   (3,'STRATEJİ'),
-							   (4,'BİRİNCİ ŞAHIS NİŞANCI'),
-							   (5,'BULMACA'),
-							   (6,'AÇIK DÜNYA'),
-							   (7,'AKSİYON'),
-							   (8,'ÇOK OYUNCULU'),
-							   (9,'TEK OYUNCULU'),
-							   (10,'ÜÇÜNCÜ ŞAHIS NİŞANCI'),
-							   (11,'ROL YAPMA'),
-							   (12,'HACK AND SLASH');
-
-INSERT INTO ODEMETURU VALUES (1,'KRED KARTI'),
-							 (2,'PAYPAL');
-
-INSERT INTO BASARIMLAR VALUES(1,'BASARIM_1',1),
-							 (2,'BASARIM_2',1),
-							 (3,'BASARIM_3',1),
-							 (4,'BASARIM_4',2),
-							 (5,'BASARIM_5',2),
-							 (6,'BASARIM_6',2),
-							 (7,'BASARIM_7',3),
-							 (8,'BASARIM_8',4),
-							 (9,'BASARIM_9',4),
-							 (10,'BASARIM_10',4),
-							 (11,'BASARIM_11',4),
-							 (12,'BASARIM_12',4),
-							 (13,'BASARIM_13',4),
-							 (14,'BASARIM_14',5),
-							 (15,'BASARIM_15',5),
-							 (16,'BASARIM_16',5),
-							 (17,'BASARIM_17',5),
-							 (18,'BASARIM_18',6),
-							 (19,'BASARIM_19',6),
-							 (20,'BASARIM_20',7),
-							 (21,'BASARIM_21',7),
-							 (22,'BASARIM_22',7),
-							 (23,'BASARIM_23',7),
-							 (24,'BASARIM_24',7),
-							 (25,'BASARIM_25',7),
-							 (26,'BASARIM_26',7),
-							 (27,'BASARIM_27',8),
-							 (28,'BASARIM_28',8),
-							 (29,'BASARIM_29',8),
-							 (30,'BASARIM_30',8),
-							 (31,'BASARIM_31',9),
-							 (32,'BASARIM_32',9),
-							 (33,'BASARIM_33',10),
-							 (34,'BASARIM_34',10),
-							 (35,'BASARIM_35',10);
-
-INSERT INTO ODULLER VALUES(1, 'ODUL_1','2017-06-20',1),
-						  (2, 'ODUL_2','2018-02-11',1),
-						  (3, 'ODUL_3','2018-07-29',2),
-						  (4, 'ODUL_4','2018-11-22',2),
-						  (5, 'ODUL_5','2018-09-10',2),
-						  (6, 'ODUL_6','2015-03-02',3),
-						  (7, 'ODUL_7','2014-05-07',3),
-						  (8, 'ODUL_8','2014-10-09',3),
-						  (9, 'ODUL_9','2014-12-05',3),
-						  (10, 'ODUL_10','2015-01-23',3),
-						  (11, 'ODUL_11','2015-04-14',4),
-						  (12, 'ODUL_12','2015-08-08',4),
-						  (13, 'ODUL_13','2018-06-25',5),
-						  (14, 'ODUL_14','2018-05-24',5),
-						  (15, 'ODUL_15','2018-06-13',5),
-						  (16, 'ODUL_16','2018-07-30',5),
-						  (17, 'ODUL_17','2017-02-01',6),
-						  (18, 'ODUL_18','2017-01-26',6),
-						  (19, 'ODUL_19','2012-11-25',7),
-						  (20, 'ODUL_20','2018-03-12',8),
-						  (21, 'ODUL_21','2017-12-02',8),
-						  (22, 'ODUL_22','2018-01-03',8),
-						  (23, 'ODUL_23','2018-08-16',8),
-						  (24, 'ODUL_24','2015-09-21',9),
-						  (25, 'ODUL_25','2015-12-17',9),
-						  (26, 'ODUL_26','2015-10-18',9),
-						  (27, 'ODUL_27','2016-04-24',9),
-						  (28, 'ODUL_28','2016-02-12',9),
-						  (29, 'ODUL_29','2016-01-15',9),
-						  (30, 'ODUL_30','2015-09-19',9),
-						  (31, 'ODUL_31','2015-05-12',9),
-						  (32, 'ODUL_32','2013-08-26',10);   
-
-INSERT INTO #ICERIR VALUES (1,1),(1,3),(1,8),
-						   (2,1),(2,8),
-						   (3,6),(3,7),(3,9),(3,10),
-						   (4,2),(4,6),(4,8),(4,9),
-						   (5,4),(5,6),(5,7),(5,9),
-						   (6,4),(6,8),
-						   (7,8),(7,11),(7,12),
-						   (8,4),(8,8),
-						   (9,3),(9,9),
-						   (10,5),(10,9);
